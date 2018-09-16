@@ -28,3 +28,12 @@
         height: 600px;
     }
 }
+
+/* for Order.js burger icon */
+.Icon {
+    height: 90px;
+    width: 100px;
+    display: inline-block;
+    padding: 20px 10px;
+}
+
