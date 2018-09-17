@@ -1,6 +1,6 @@
 .Order {
     width: 90%;
-    max-width: 800px;
+    max-width: 730px;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     padding: 10px;
@@ -29,18 +29,17 @@
     text-transform: capitalize;
     display: inline-block;
     margin: 0 8px;
-    border: 1px solid #ccc;
-    padding: 5px;
+    /* border: 1px solid #ccc; */
 }
 
-@media (max-width: 500px){
+@media (max-width: 600px){
     .Info {
         font-size: 0.75em;
         max-width: 50%;
     }
     .Info span {
         border: none;
-        margin: 0;
+        margin: 3px;
     }
 }
 

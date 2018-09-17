@@ -26,6 +26,7 @@ const order = (props) => {
         <div className={classes.Order}>
             <Burger icon="true" className={classes.Burger} ingredients={props.ingredients} />
             <div className={classes.Info} >
+                <p> Buyer: {props.buyer} </p>
                 <p> Ingredients: { ingredientOutput } </p>          
                 <p> Price: <strong> ${props.price.toFixed(2)} USD </strong> </p>
             </div>
