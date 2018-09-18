@@ -26,7 +26,7 @@ class BurgerBuilder extends Component {
             beef: 0
         },
         totalPrice: 4,      //default price
-        purchasable: true,  //anything on burger?
+        purchasable: false,  //anything on burger?
         ordering: false,    //modal open?
         loading: false
     }
