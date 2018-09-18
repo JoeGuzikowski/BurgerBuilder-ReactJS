@@ -14,7 +14,7 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Your Name'
+                    placeholder: 'Burger Name'
                 },
                 value: '',
                 validation: {
@@ -23,83 +23,83 @@ class ContactData extends Component {
                 valid: false,
                 touched: false
             },
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Street'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false,
-                touched: false
-            },
-            city: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'City'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false,
-                touched: false
-            },
-            zipCode: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'number',
-                    placeholder: 'Zip Code'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    exactLength: 5
-                },
-                valid: false,
-                touched: false
-            },
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Country'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false,
-                touched: false
-            },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Email'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false,
-                touched: false
-            },
-            deliveryMethod: {
-                elementType: 'select',
-                elementConfig: {
-                    options: [
-                                {value: 'fastest', displayValue: 'Fastest'},
-                                {value: 'cheapest', displayValue: 'Cheapest'},
-                            ]
-                },
-                value: '',
-                valid: 'true'
-            }
+            // street: {
+            //     elementType: 'input',
+            //     elementConfig: {
+            //         type: 'text',
+            //         placeholder: 'Street'
+            //     },
+            //     value: '',
+            //     validation: {
+            //         required: true
+            //     },
+            //     valid: false,
+            //     touched: false
+            // },
+            // city: {
+            //     elementType: 'input',
+            //     elementConfig: {
+            //         type: 'text',
+            //         placeholder: 'City'
+            //     },
+            //     value: '',
+            //     validation: {
+            //         required: true
+            //     },
+            //     valid: false,
+            //     touched: false
+            // },
+            // zipCode: {
+            //     elementType: 'input',
+            //     elementConfig: {
+            //         type: 'number',
+            //         placeholder: 'Zip Code'
+            //     },
+            //     value: '',
+            //     validation: {
+            //         required: true,
+            //         exactLength: 5
+            //     },
+            //     valid: false,
+            //     touched: false
+            // },
+            // country: {
+            //     elementType: 'input',
+            //     elementConfig: {
+            //         type: 'text',
+            //         placeholder: 'Country'
+            //     },
+            //     value: '',
+            //     validation: {
+            //         required: true
+            //     },
+            //     valid: false,
+            //     touched: false
+            // },
+            // email: {
+            //     elementType: 'input',
+            //     elementConfig: {
+            //         type: 'text',
+            //         placeholder: 'Email'
+            //     },
+            //     value: '',
+            //     validation: {
+            //         required: true
+            //     },
+            //     valid: false,
+            //     touched: false
+            // },
+            // deliveryMethod: {
+            //     elementType: 'select',
+            //     elementConfig: {
+            //         options: [
+            //                     {value: 'fastest', displayValue: 'Fastest'},
+            //                     {value: 'cheapest', displayValue: 'Cheapest'},
+            //                 ]
+            //     },
+            //     value: '',
+            //     valid: 'true'
+            // }
         },
         formIsValid: false,
         loading: false
@@ -134,7 +134,7 @@ class ContactData extends Component {
         let isValid = true;
 
         if (rules && rules.required) {
-            isValid = (value.trim() !== '') && isValid;
+            isValid = !(value === "") && isValid;
         }
         if (rules && rules.exactLength) {
             isValid = (value.length === rules.exactLength) && isValid;
@@ -154,13 +154,15 @@ class ContactData extends Component {
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
+        updatedOrderForm[inputName] = updatedFormElement;
 
         // checks if user has entered enough info
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+            console.log(formIsValid);
         }
-        updatedOrderForm[inputName] = updatedFormElement;
+
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
  
@@ -172,7 +174,6 @@ class ContactData extends Component {
                 config: this.state.orderForm[key]
             });
         }
-        console.log(this.state.orderForm);
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
@@ -194,7 +195,7 @@ class ContactData extends Component {
         }
         return ( 
             <div className={classes.ContactData}>
-                <h4> Enter contact information: </h4>
+                <h4> Enter burger information: </h4>
                 { form }
             </div>
         );
