@@ -54,3 +54,9 @@
     background-color: #99703F;
     color: white;
 }
+
+@media (max-height: 569px) {
+    .BuildControl button {
+        height: 30px;
+    }
+}
