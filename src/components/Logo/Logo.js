@@ -10,7 +10,6 @@ class logo extends Component {
     }
 
     handleImageLoaded = () => {
-        console.log("finished loading");
         this.setState({loading: false});
     }
 
