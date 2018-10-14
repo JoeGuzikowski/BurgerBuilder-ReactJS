@@ -16,7 +16,7 @@ class Orders extends Component {
     render() {
         let orders = <Spinner />;
         if ( !this.props.loading ) {
-            orders = (
+            orders = (  
                 <div>
                     <h2 style={{textAlign: "center", margin: "auto"}} > All past orders </h2>
                         {this.props.orders.map(order => (
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: (token) => dispatch(actions.fetchOrders(token))
+        onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
     };
 };
 

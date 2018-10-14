@@ -8,6 +8,8 @@ import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
 
+import { updateObject, checkValidity } from '../../../utility/utility';
+
 import classes from './ContactData.css';
 
 class ContactData extends Component {
@@ -126,31 +128,17 @@ class ContactData extends Component {
         this.props.history.push('/');
     }
 
-    checkValidity(value, rules) {
-        let isValid = true;
-
-        if (rules && rules.required) {
-            isValid = !(value === "") && isValid;
-        }
-        if (rules && rules.exactLength) {
-            isValid = (value.length === rules.exactLength) && isValid;
-        }
-
-        return isValid;
-    }
-
     inputChangedHandler = (event, inputName) => {
         // make deep copy
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
-        const updatedFormElement = {
-            ...updatedOrderForm[inputName]
-        }
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[inputName] = updatedFormElement;
+        
+        const updatedFormElement = updateObject( this.state.orderForm[inputName], {
+            value: event.target.value,
+            valid: checkValidity( event.target.value, this.state.orderForm[inputName].validation),
+            touched: true
+        });
+        const updatedOrderForm = updateObject( this.state.orderForm, {
+            [inputName]: updatedFormElement
+        });
 
         // checks if user has entered enough info
         let formIsValid = true;

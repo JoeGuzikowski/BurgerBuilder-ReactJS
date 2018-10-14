@@ -9,7 +9,6 @@ const authStart = () => {
 };
 
 const authSuccess = (idToken, userId) => {
-
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: idToken,

@@ -6,6 +6,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import { updateObject, checkValidity } from '../../utility/utility'; 
 import * as actions from '../../store/actions/index';
 
 import classes from './Auth.css';
@@ -47,42 +48,16 @@ class Auth extends Component {
     }
 
 
-    checkValidity(value, rules) {
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = !(value === "") && isValid;
-        }
-        if (rules.exactLength) {
-            isValid = (value.length === rules.exactLength) && isValid;
-        }
-        if (rules.isEmail) {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            isValid = pattern.test(value) && isValid;
-        }
-        if (rules.minLength) {
-            isValid = (value.length >= rules.minLength) && isValid;
-        }
-
-        return isValid;
-    }
-
     inputChangedHandler = (event, inputName) => {
         // make deep copy
-        const updatedForm = {
-            ...this.state.orderForm
-        }
-        const updatedFormElement = {
-            ...updatedForm[inputName],
-            value: event.target.value,
-            valid: this.checkValidity(event.target.value, updatedForm[inputName].validation),
-            touched: true
-        }
-        updatedForm[inputName] = updatedFormElement;
-
+        const updatedForm = updateObject(this.state.orderForm, {
+            [inputName]: updateObject(this.state.orderForm[inputName], {
+                value: event.target.value,
+                valid: checkValidity(event.target.value, this.state.orderForm[inputName].validation),
+                touched: true
+            })
+        });
+        
         let formIsValid = true;
         for (let inputIdentifier in updatedForm){
             formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
@@ -133,13 +108,14 @@ class Auth extends Component {
         }
 
         // if the user is authenticated already, redirect to "/"
+        let authRedirect = null;
         if (this.props.isAuthenticated) {
             // if they're currently building a burger
             if (this.props.isBuilding) {
-                return <Redirect to="/checkout" />
+                authRedirect =  <Redirect to="/checkout" />
             }
             else {
-                return <Redirect to="/" />
+                authRedirect =  <Redirect to="/" />
             }
         }
 
@@ -152,6 +128,7 @@ class Auth extends Component {
 
         return ( 
             <div className={classes.Auth}>
+                { authRedirect }
                 { errorMessage }
                 <form onSubmit={(event) => this.submitHandler(event)}>
                     { form }

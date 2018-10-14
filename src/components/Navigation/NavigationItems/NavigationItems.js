@@ -2,17 +2,18 @@ import React from 'react';
 
 import classes from './NavigationItems.css';
 
+import Aux from '../../../hoc/Aux/Aux';
 import NavigationItem from './NavigationItem/NavigationItem';
 
 const navigationItems = (props) =>(
     <ul className={classes.NavigationItems}>
-        <NavigationItem link="/" exact>Burger Builder</NavigationItem>
+        <NavigationItem link="/" onClick={props.closeDrawer} exact>Burger Builder</NavigationItem>
         {props.isAuthenticated
-            ? <NavigationItem link="/orders">Orders</NavigationItem>
-            : null }
-        {props.isAuthenticated 
-            ? <NavigationItem link="/logout"> Logout </NavigationItem>
-            : <NavigationItem link="/auth"> Login / Signup </NavigationItem> }
+            ? <Aux> 
+                <NavigationItem onClick={props.closeDrawer} link="/orders">Orders</NavigationItem>
+                <NavigationItem onClick={props.closeDrawer} link="/logout"> Logout </NavigationItem> 
+              </Aux>
+            : <NavigationItem onClick={props.closeDrawer} link="/auth"> Login / Signup </NavigationItem> }
     </ul>
 );
 
