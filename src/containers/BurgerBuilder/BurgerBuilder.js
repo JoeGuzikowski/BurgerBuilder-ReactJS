@@ -12,7 +12,7 @@ import axios from '../../axios-orders';
 
 import * as burgerBuilderActions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     state = { 
         ordering: false,    //modal open?
         loading: false
